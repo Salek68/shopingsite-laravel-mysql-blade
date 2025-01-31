@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryZirMenu;
+use App\Models\CommentProduct;
 use App\Models\galery;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\select;
 
 class Products extends Controller
 {
@@ -28,10 +31,106 @@ class Products extends Controller
     ->get();
 
 
-            return view('product', compact('product','galery','rlated','vigeis'));
+
+    $Comments = DB::table('comment_product')
+    ->join('products', 'comment_product.product_id', '=', 'products.id')
+    ->where('comment_product.product_id', $id)
+    ->where('comment_product.verify', 1)
+    ->select('comment_product.id','comment_product.comment','comment_product.product_id','comment_product.like','comment_product.dislike')
+    ->get();
+
+     $view = Product::find($id);
+     $view->increment('view');
+
+
+            return view('product', compact('product','galery','rlated','vigeis','Comments'));
 
 
     }
 
+    function update(Request $req, $id,$name){
+        if($name == "like"){
 
-}
+            try {
+                // پیدا کردن کامنت با استفاده از ID
+                $comment = CommentProduct::find($id);
+
+                // اگر کامنت یافت نشد، پیام خطا بده
+                if (!$comment) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'کامنت با این ID یافت نشد'
+                    ], 404);
+                }
+
+                // اگر مقدار like برابر با null بود، آن را به 0 تنظیم می‌کنیم
+                if ($comment->like === null) {
+                    $comment->like = 0;
+                }
+
+                // افزایش مقدار like
+                $comment->increment('like');
+
+                return response()->json([
+                    'success' => true,
+                    'likes' => $comment->like
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'خطایی رخ داد: ' . $e->getMessage()
+                ], 500);
+            }
+    }
+    elseif($name == "dislike"){
+       try {
+            // پیدا کردن کامنت با استفاده از ID
+            $comment = CommentProduct::find($id);
+
+            // اگر کامنت یافت نشد، پیام خطا بده
+            if (!$comment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'کامنت با این ID یافت نشد'
+                ], 404);
+            }
+
+            // اگر مقدار like برابر با null بود، آن را به 0 تنظیم می‌کنیم
+            if ($comment->like === null) {
+                $comment->like = 0;
+            }
+
+            // افزایش مقدار like
+            $comment->increment('dislike');
+
+            return response()->json([
+                'success' => true,
+                'dislike' => $comment->dislike
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'خطایی رخ داد: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    }
+
+    function store(Request $req , $id){
+
+        $req->validate([
+            'comment' => 'required|string|max:500',
+        ]);
+        $comment = new CommentProduct();
+        $comment->comment  =  $req->comment;
+        $comment->verify = 0;
+        $comment->product_id = $id;
+        $comment->save();
+        return redirect()->back()->with('status', 'نظر شما ثبت شد. در صورت تایید مدیر، در این صفحه نمایش داده خواهد شد.');
+    }
+    }
+
+
+
+

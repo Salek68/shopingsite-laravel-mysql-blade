@@ -67,7 +67,31 @@
           @endif
 
           <div  class="btn-single">
-             <a href="#"><i class="fa fa-cart-plus"></i>خرید آنلاین</a>
+            <div class="product-details">
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                    <a href="{{route('cart.index')}}">مشاهده سبد خرید</a>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+                <!-- فرم انتخاب تعداد -->
+                <form action="{{ route('cart.add', $product->id) }}" method="GET">
+                    <div class="form-group">
+                        <label for="quantity">تعداد</label>
+                        <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="{{ $product->stock }}">
+                    </div>
+
+                    <!-- دکمه افزودن به سبد خرید -->
+                    <button type="submit" class="btn btn-success">افزودن به سبد خرید</button>
+                </form>
+            </div>
           </div>
        </div>
        <div class="col-md-5">
@@ -126,6 +150,103 @@
 
 
 @section('two_nazar')
-نظری وجود ندارد...
+
+
+
+<div class="container mt-5">
+    <h2 class="text-center">ثبت نظر</h2>
+
+    <!-- نمایش پیام بعد از ارسال نظر -->
+    @if (session('status'))
+        <script>
+            alert("{{ session('status') }}")
+        </script>
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <!-- فرم ثبت نظر -->
+    <form action="{{ route('storecomment',$product->id ) }}" method="POST">
+        @csrf
+
+        <div class="form-group">
+            <label for="comment">نظر شما:</label>
+            <textarea name="comment" id="comment" class="form-control" rows="4" required placeholder="نظر خود را وارد کنید..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">ارسال نظر</button>
+        </div>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".like-btn").click(function() {
+            var commentId = $(this).data("id");
+            var button = $(this);
+
+            $.ajax({
+                url: "/Product/" + commentId + "/like",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.success) {
+                        button.find(".like-count").text(response.likes);
+                    }
+                }
+            });
+        });
+
+        $(".dislike-btn").click(function() {
+            var commentId = $(this).data("id");
+            var button = $(this);
+
+            $.ajax({
+                url: "/Product/" + commentId + "/dislike",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.success) {
+                        button.find(".dislike-count").text(response.dislike);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+@if ($Comments->isNotEmpty())
+<ul class="space-y-4">
+    @foreach ($Comments as $item)
+        <li class="p-4 bg-white shadow rounded-lg flex justify-between items-center">
+            <div>
+                <p class="text-lg font-semibold">{{ $item->comment }}</p>
+                <small class="text-gray-500">توسط {{ $item->user->name ?? 'مهمان' }}</small>
+            </div>
+            <div class="flex space-x-2">
+                <button class="like-btn flex items-center px-3 py-1 text-green-600 border border-green-600 rounded-lg hover:bg-green-600 hover:text-white"
+                        data-id="{{ $item->id }}">
+                    👍 <a class="like-count">{{ $item->like }}</a>
+                </button>
+                <button class="dislike-btn flex items-center px-3 py-1 text-red-600 border border-red-600 rounded-lg hover:bg-red-600 hover:text-white"
+                        data-id="{{ $item->id }}">
+                    👎  <a class="dislike-count">{{ $item->dislike }}</a>
+            </div>
+        </li>
+    @endforeach
+</ul>
+
+@else
+    <p class="text-center text-muted">هیچ نظری وجود ندارد.</p>
+@endif
+
 
 @endsection

@@ -836,7 +836,7 @@ transition:all 0.3s ease;
 -o-transition:all 0.2s;
 }
 
-.single-box .btn-single a{
+.single-box .btn-single button {
 color:#fff;
 display:block;
 }

@@ -23,7 +23,7 @@ class landing
     {
         if(request()->is('*')){
             $categorymenu1 = CategoryMenu::with('submenus')->where('id', '>', 0)->where('active', '=', 1)->where('position', '=', "menu1")->get();
-
+// dd($categorymenu1);
             view()->share('menu1', $categorymenu1);
         }
         if(request()->is('/')){

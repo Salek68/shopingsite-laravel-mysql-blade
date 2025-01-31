@@ -24,9 +24,9 @@
             <div class="row">
                <div class="col-md-6">
                   <div class="login">
-                     <a href="#" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
-                     <a href="#" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
-                     <a href="#" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
+                     <a href="{{route('Register.index')}}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
+                     <a href="{{route('Login.index')}}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+                     <a href="{{route('cart.index')}}" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
                   </div>
                </div>
                <div class="col-md-6">
@@ -46,6 +46,7 @@
             <div class="row">
                <div class="col-md-12">
                   <ul style="direction: ltr;">
+
                     @foreach ($menu1 as $menu)
 
 
@@ -72,7 +73,7 @@
 
 
                 @endforeach
-
+                <li><a href="{{route('index')}}">صفحه نخست<a></li>
                   </ul>
                </div>
             </div>
@@ -130,7 +131,7 @@
             <div class="row">
                <div class="col-md-12 text-center">
                   &copy;&nbsp;&nbsp;طراحی و کدنویسی  صالح کشاورز&nbsp;&nbsp;&nbsp;&nbsp;
-                 
+
                </div>
             </div>
          </div>

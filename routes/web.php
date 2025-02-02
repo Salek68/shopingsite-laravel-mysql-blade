@@ -6,6 +6,7 @@ use App\Http\Controllers\Products;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PanelAdmin;
 use App\Http\Controllers\RegisterController;
 
 Route::get('/',[landing::class,'index'])->name('index');
@@ -24,8 +25,12 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
 Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-
+Route::post('/cart/submit', [CartController::class, 'submitCart'])->name('cart.submit');
 
 Route::get('/Register',[RegisterController::class,'index'])->name('Register.index');
 Route::get('/Login',[LoginController::class,'index'])->name('Login.index');
+
+
+
+Route::get('/AdminPanel',[PanelAdmin::class,'index'])->name('AdminPanel.index');
 

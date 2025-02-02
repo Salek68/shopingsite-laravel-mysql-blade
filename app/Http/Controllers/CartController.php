@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -34,6 +35,7 @@ class CartController extends Controller
             // در غیر این صورت، محصول جدید را به سبد خرید اضافه می‌کنیم
             $cart[$id] = [
                 'name' => $product->name,
+                'id' => $product->id,
                 'price' => $product->price,
                 'quantity' => $quantity,
             ];
@@ -87,4 +89,56 @@ class CartController extends Controller
 
     return redirect()->back()->with('success', 'سبد خرید شما بروزرسانی شد!');
 }
+
+function submitCart(Request $request){
+    $cart = session()->get('cart', []);
+    // dd($cart);
+// dd($request->total);
+$request->validate([
+    'name' => 'required|string',
+    'phone' => ['required', 'string', 'regex:/^09[0-9]{9}$/'],
+    'address' => 'required|string',
+    'delivery' => 'required|in:post,express',
+    'payment' => 'required|in:online,cash',
+]);
+
+
+$totalPrice = $request->total;
+
+$order = Order::create([
+    'name' => $request->name,
+    'phone' => $request->phone,
+    'address' => $request->address,
+    'delivery' => $request->delivery,
+    'payment' => $request->payment,
+    'total_price' => $totalPrice
+]);
+
+foreach ( $cart as $item) {
+
+    $order->items()->create([
+        'product_id' => $item['id'],
+        'price' => $item['price'],
+        'quantity' => $item['quantity']
+    ]);
+}
+$oid = $order->id;
+
+foreach ($cart as $item){
+    unset($cart[$item['id']]);
+    
+    $product = Product::find($item['id']);
+    $product->stock =  $product->stock - $item['quantity'];
+    $product->save();
+
+}
+
+
+            session()->put('cart', $cart);
+
+// return response()->json(['message' => 'سفارش با موفقیت ثبت شد!', 'order_id' => $order->id], 201);
+        return view('cart',compact('oid'));
+
+}
+
 }

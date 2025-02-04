@@ -29,6 +29,7 @@ Route::post('/cart/submit', [CartController::class, 'submitCart'])->name('cart.s
 
 Route::get('/Register',[RegisterController::class,'index'])->name('Register.index');
 Route::get('/Login',[LoginController::class,'index'])->name('Login.index');
+Route::post('/Login',[LoginController::class,'index1'])->name('Login.index1');
 
 
 

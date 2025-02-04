@@ -9,7 +9,7 @@
                 <h3>ورود</h3>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('Login.index') }}">
+                <form method="POST" action="{{ route('Login.index1') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="email" class="form-label">ایمیل</label>

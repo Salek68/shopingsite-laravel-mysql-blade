@@ -33,4 +33,5 @@ Route::get('/Login',[LoginController::class,'index'])->name('Login.index');
 
 
 Route::get('/AdminPanel',[PanelAdmin::class,'index'])->name('AdminPanel.index');
-
+Route::get('/AdminPanel/Orders/Remove/{id}',[PanelAdmin::class,'OrderRemove'])->name('AdminPanel.Orders.Remove');
+Route::get('/AdminPanel/Orders/Edit/{id}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');

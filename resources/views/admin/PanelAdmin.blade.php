@@ -89,8 +89,8 @@
 پرداخت شده
             @endif</a></td>
             <td class="i__oprations">
-                <a href="" class="item-delete margin-left-10" title="حذف"></a>
-                <a href="edit-transaction.html" class="item-edit" title='ویرایش'></a>
+                <a href="{{ route('AdminPanel.Orders.Remove', ['id'=>$order->id]) }}" class="item-delete margin-left-10" title="حذف"></a>
+                <a href="{{ route('AdminPanel.Orders.Edit', ['id'=>$order->id]) }}" class="item-edit" title='ویرایش'></a>
             </td>
         </tr>
           @endforeach

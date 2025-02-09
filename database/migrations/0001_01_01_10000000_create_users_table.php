@@ -16,6 +16,32 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('status')->default('1');
+            $table->boolean('isadmin')->default('0');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+        Schema::create('AdminPos', function (Blueprint $table) {
+            $table->id();
+            $table->enum('position', [
+                'پیشخوان',
+                'دوره ها',
+                'کاربران',
+                'دسته بندی ها',
+                'اسلایدشو',
+                'بنر ها',
+                'مقالات',
+                'تبلیغات',
+                'نظرات',
+                'تیکت ها',
+                'تخفیف ها',
+                'تراکنش ها'
+            ]);
+            $table->unsignedBigInteger("admin_id");
+            $table->foreign('admin_id') // تنظیم رابطه
+                ->references('id') // اشاره به ستون id
+                ->on('users') // نام جدول زیرمنوها
+                ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

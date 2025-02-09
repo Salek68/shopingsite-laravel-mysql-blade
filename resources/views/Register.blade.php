@@ -7,9 +7,10 @@
             <div class="card shadow-lg border-0 rounded-3">
                 <div class="card-header text-center bg-dark text-white">
                     <h3>ثبت نام</h3>
+
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('Register.index') }}">
+                    <form method="POST" action="{{ route('Register.Register') }}">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">نام کامل</label>
@@ -37,7 +38,10 @@
 
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">تأیید کلمه عبور</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                            <input type="password" class="form-control  @error('dup') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                            @error('dup')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
 
                         <div class="d-grid gap-2">

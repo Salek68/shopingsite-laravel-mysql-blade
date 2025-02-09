@@ -28,11 +28,22 @@ Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.u
 Route::post('/cart/submit', [CartController::class, 'submitCart'])->name('cart.submit');
 
 Route::get('/Register',[RegisterController::class,'index'])->name('Register.index');
+Route::post('/Register/save',[RegisterController::class,'save'])->name('Register.Register');
+
 Route::get('/Login',[LoginController::class,'index'])->name('Login.index');
-Route::post('/Login',[LoginController::class,'index1'])->name('Login.index1');
+Route::post('/Login',[LoginController::class,'index1'])->name('Login.check');
+
+
 
 
 
 Route::get('/AdminPanel',[PanelAdmin::class,'index'])->name('AdminPanel.index');
+
+Route::get('/AdminPanel/Users',[PanelAdmin::class,'Users'])->name('AdminPanel.Users');
+Route::post('/AdminPanel/Users/serech',[PanelAdmin::class,'Users_serech'])->name('AdminPanel.Users_serech');
+Route::get('/AdminPanel/Users/remove/{id}',[PanelAdmin::class,'Users_remove'])->name('AdminPanel.Users_remove');
+Route::get('/AdminPanel/Users/status/{id}',[PanelAdmin::class,'Users_status'])->name('AdminPanel.Users_status');
+Route::get('/AdminPanel/Users/admins',[PanelAdmin::class,'Users_admins'])->name('AdminPanel.Users.admins');
+
 Route::get('/AdminPanel/Orders/Remove/{id}',[PanelAdmin::class,'OrderRemove'])->name('AdminPanel.Orders.Remove');
 Route::get('/AdminPanel/Orders/Edit/{id}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');

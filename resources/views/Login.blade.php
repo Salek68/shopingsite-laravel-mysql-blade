@@ -7,9 +7,13 @@
         <div class="card shadow-lg border-0 rounded-3">
             <div class="card-header text-center bg-dark text-white">
                 <h3>ورود</h3>
+                @isset($mess)
+                <h4>{{$mess}}</h4>
+
+                @endisset
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('Login.index1') }}">
+                <form method="POST" action="{{ route('Login.check') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="email" class="form-label">ایمیل</label>
@@ -21,8 +25,8 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">کلمه عبور</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
-                        @error('password')
+                        <input type="password" class="form-control @error('status') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
+                        @error('status')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

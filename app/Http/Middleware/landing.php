@@ -21,7 +21,9 @@ class landing
      */
     public function handle(Request $request, Closure $next)
     {
-       
+            // $product = Product::first();
+            // dd($product);
+
         if(request()->is('*')){
             $categorymenu1 = CategoryMenu::with('submenus')->where('id', '>', 0)->where('active', '=', 1)->where('position', '=', "menu1")->get();
 // dd($categorymenu1);
@@ -78,7 +80,7 @@ class landing
            ->orderBy('slidersproduct.position', 'asc')
            ->get();
            view()->share('results', $results);
-
+           
 //     SELECT `baner_category`.`position`, `category_zir_menu`.`name`, `category_zir_menu`.`img`
 // FROM `baner_category`
 // LEFT JOIN `category_zir_menu` ON `baner_category`.`category_id` = `category_zir_menu`.`id`

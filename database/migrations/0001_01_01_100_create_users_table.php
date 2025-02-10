@@ -11,6 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('positions', function (Blueprint $table) {
+            $table->id();
+            $table->string('pos');
+            $table->string('i');
+            $table->string('route');
+            $table->timestamps();
+            $table->softDeletes();
+        });
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -23,25 +31,17 @@ return new class extends Migration
         });
         Schema::create('AdminPos', function (Blueprint $table) {
             $table->id();
-            $table->enum('position', [
-                'پیشخوان',
-                'دوره ها',
-                'کاربران',
-                'دسته بندی ها',
-                'اسلایدشو',
-                'بنر ها',
-                'مقالات',
-                'تبلیغات',
-                'نظرات',
-                'تیکت ها',
-                'تخفیف ها',
-                'تراکنش ها'
-            ]);
             $table->unsignedBigInteger("admin_id");
             $table->foreign('admin_id') // تنظیم رابطه
                 ->references('id') // اشاره به ستون id
                 ->on('users') // نام جدول زیرمنوها
                 ->onDelete('cascade');
+
+                $table->unsignedBigInteger("pos_id");
+                $table->foreign('pos_id') // تنظیم رابطه
+                    ->references('id') // اشاره به ستون id
+                    ->on('positions') // نام جدول زیرمنوها
+                    ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

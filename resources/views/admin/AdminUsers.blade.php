@@ -50,6 +50,7 @@ is-active
                 </thead>
                 <tbody>
 
+
                     @foreach ($user as $td)
                         <tr role="row" class="">
                             <td>{{ $td->id }}</td>
@@ -73,10 +74,16 @@ is-active
                                 </td>
                                 @endif
                             <td>
+
+                                @if (session('ac') == true)
                                 <a href="{{ route('AdminPanel.Users_remove', ['id'=>$td->id]) }}" class="item-delete mlg-15" title="حذف"></a>
                                 <a href="{{ route('AdminPanel.Users_status', ['id'=>$td->id]) }}" class="item-confirm mlg-15" title="تایید"></a>
                                 <a href="{{ route('AdminPanel.Users_status', ['id'=>$td->id]) }}" class="item-reject mlg-15" title="رد"></a>
                                 <a href="edit-user.html" class="item-edit " title="ویرایش"></a>
+                                @else
+                                <a>دسترسی ندارید</a>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach

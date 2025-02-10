@@ -3,10 +3,11 @@
 use App\Http\Controllers\landing;
 use App\Http\Controllers\category;
 use App\Http\Controllers\Products;
+use App\Http\Middleware\AdminAuth;
+use App\Http\Controllers\PanelAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PanelAdmin;
 use App\Http\Controllers\RegisterController;
 
 Route::get('/',[landing::class,'index'])->name('index');
@@ -40,10 +41,19 @@ Route::post('/Login',[LoginController::class,'index1'])->name('Login.check');
 Route::get('/AdminPanel',[PanelAdmin::class,'index'])->name('AdminPanel.index');
 
 Route::get('/AdminPanel/Users',[PanelAdmin::class,'Users'])->name('AdminPanel.Users');
+Route::get('/AdminPanel/Users/Users_logaout',[PanelAdmin::class,'Users_logaout'])->name('AdminPanel.Users_logaout');
 Route::post('/AdminPanel/Users/serech',[PanelAdmin::class,'Users_serech'])->name('AdminPanel.Users_serech');
 Route::get('/AdminPanel/Users/remove/{id}',[PanelAdmin::class,'Users_remove'])->name('AdminPanel.Users_remove');
 Route::get('/AdminPanel/Users/status/{id}',[PanelAdmin::class,'Users_status'])->name('AdminPanel.Users_status');
 Route::get('/AdminPanel/Users/admins',[PanelAdmin::class,'Users_admins'])->name('AdminPanel.Users.admins');
 
+Route::get('/AdminPanel/Products',[PanelAdmin::class,'Products'])->name('AdminPanel.Products');
+Route::post('/AdminPanel/Products/serech',[PanelAdmin::class,'Products_serech'])->name('AdminPanel.Products_serech');
+Route::get('/AdminPanel/Products/remove/{id}',[PanelAdmin::class,'Products_remove'])->name('AdminPanel.Products_remove');
+Route::get('/AdminPanel/Products/status/{id}',[PanelAdmin::class,'Products_status'])->name('AdminPanel.Products_status');
+Route::get('/AdminPanel/Products/stoke',[PanelAdmin::class,'Products_stoke'])->name('AdminPanel.Products_stoke');
+Route::get('/AdminPanel/Products/notstoke',[PanelAdmin::class,'Products_notstoke'])->name('AdminPanel.Products_notstoke');
+
 Route::get('/AdminPanel/Orders/Remove/{id}',[PanelAdmin::class,'OrderRemove'])->name('AdminPanel.Orders.Remove');
 Route::get('/AdminPanel/Orders/Edit/{id}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');
+

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use function Laravel\Prompts\error;
 
@@ -38,7 +39,7 @@ class RegisterController extends Controller
                 $user = new User();
                 $user->name  = $request['name'];
                 $user->email  = $request['email'];
-                $user->password  = md5($request['password']) ;
+                $user->password  = Hash::make($request['password']) ;
                 $user->save();
                 $mess = "ثبت نام باموفقیت انجام شد.";
                 return view('Login', compact('mess'));

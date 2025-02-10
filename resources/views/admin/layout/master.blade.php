@@ -18,33 +18,42 @@
             <div class="v-dialog__container" style="display: block;"></div>
             <div class="box__camera default__avatar"></div>
         </div>
-        <span class="profile__name">کاربر : @php
-            $userName = Crypt::decrypt(session('user_name'));
+        <span class="profile__name"> @php
+            if(session('user_name')){
+                $userName = Crypt::decrypt(session('user_name'));
+            }
+
         @endphp
+        @isset($userName)
 {{$userName}}
+        @endisset
+
     </span>
     </div>
 
     <ul>
-        <li class="item-li i-dashboard is-active"><a href="{{ route('AdminPanel.index') }}">پیشخوان</a></li>
-        <li class="item-li i-courses "><a href="courses.html">دوره ها</a></li>
-        <li class="item-li i-users"><a href="{{ route('AdminPanel.Users') }}"> کاربران</a></li>
-        <li class="item-li i-categories"><a href="categories.html">دسته بندی ها</a></li>
-        <li class="item-li i-slideshow"><a href="slideshow.html">اسلایدشو</a></li>
-        <li class="item-li i-banners"><a href="banners.html">بنر ها</a></li>
-        <li class="item-li i-articles"><a href="articles.html">مقالات</a></li>
-        <li class="item-li i-ads"><a href="ads.html">تبلیغات</a></li>
-        <li class="item-li i-comments"><a href="comments.html"> نظرات</a></li>
-        <li class="item-li i-tickets"><a href="tickets.html"> تیکت ها</a></li>
-        <li class="item-li i-discounts"><a href="discounts.html">تخفیف ها</a></li>
-        <li class="item-li i-transactions"><a href="transactions.html">تراکنش ها</a></li>
-        <li class="item-li i-checkouts"><a href="checkouts.html">تسویه حساب ها</a></li>
-        <li class="item-li i-checkout__request "><a href="checkout-request.html">درخواست تسویه </a></li>
-        <li class="item-li i-my__purchases"><a href="mypurchases.html">خرید های من</a></li>
-        <li class="item-li i-my__peyments"><a href="mypeyments.html">پرداخت های من</a></li>
-        <li class="item-li i-notification__management"><a href="notification-management.html">مدیریت اطلاع رسانی</a>
+        @if (session('user_ac'))
+        @foreach (session('user_ac') as $item )
+        @if ($item->pos != "all")
+        <li class="item-li {{ $item->i }} @isset($is_active)  @if ($is_active == $item->id) is-active @endif @endisset">
+            <a href="{{ route($item->route) }}">{{ $item->pos }}</a>
         </li>
-        <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
+        @else
+        @php
+            $all = true;
+        @endphp
+        @endif
+
+
+
+
+        @endforeach
+    @else
+
+    @endif
+    <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
+
+
     </ul>
 
 </div>
@@ -53,9 +62,14 @@
         <div class="header__right d-flex flex-grow-1 item-center">
             <span class="bars"></span>
             <a class="" href=""> @php
-                $userName = Crypt::decrypt(session('user_name'));
+                if(session('user_name')){
+                    $userName = Crypt::decrypt(session('user_name'));
+                }
+
             @endphp
-    {{$userName}}</a>
+            @isset($userName)
+    {{$userName}}
+            @endisset</a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
             <span class="account-balance font-size-12">موجودی : 2500,000 تومان</span>
@@ -67,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <a href="" class="logout" title="خروج"></a>
+            <a href="{{ route('AdminPanel.Users_logaout') }}" class="logout" title="خروج"></a>
         </div>
     </div>
     <div class="breadcrumb">

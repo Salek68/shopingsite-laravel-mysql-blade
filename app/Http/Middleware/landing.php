@@ -21,16 +21,7 @@ class landing
      */
     public function handle(Request $request, Closure $next)
     {
-        if(request()->is('*AdminPanel*')){
-            dd(session()->all());
-            if(session('user_role')){
-                
-            }
-            else{
-                return redirect()->route('Login.index');
-
-            }
-        }
+       
         if(request()->is('*')){
             $categorymenu1 = CategoryMenu::with('submenus')->where('id', '>', 0)->where('active', '=', 1)->where('position', '=', "menu1")->get();
 // dd($categorymenu1);

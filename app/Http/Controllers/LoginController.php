@@ -66,9 +66,13 @@ class LoginController extends Controller
                     }
                 }
                 else{
+                    session([
+                        'user_name' => Crypt::encrypt($user->name),
+                        'user_id' => Crypt::encrypt($user->id),
+                        'user_role' => Crypt::encrypt('user')
+                    ]);
 
-                    ///// بره به پنل کاربری یوزر ساده
-
+                    return redirect()->route('UserPanel.index');
                 }
             }
             else{

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserPanel;
 
 Route::get('/',[landing::class,'index'])->name('index');
 
@@ -35,6 +36,9 @@ Route::get('/Login',[LoginController::class,'index'])->name('Login.index');
 Route::post('/Login',[LoginController::class,'index1'])->name('Login.check');
 
 
+Route::get('/UserPanel',[UserPanel::class,'index'])->name('UserPanel.index');
+Route::get('/UserPanel/Orders/remove/{id}',[UserPanel::class,'Orders_remove'])->name('UserPanel.Orders_remove');
+
 
 
 
@@ -51,9 +55,16 @@ Route::get('/AdminPanel/Products',[PanelAdmin::class,'Products'])->name('AdminPa
 Route::post('/AdminPanel/Products/serech',[PanelAdmin::class,'Products_serech'])->name('AdminPanel.Products_serech');
 Route::get('/AdminPanel/Products/remove/{id}',[PanelAdmin::class,'Products_remove'])->name('AdminPanel.Products_remove');
 Route::get('/AdminPanel/Products/status/{id}',[PanelAdmin::class,'Products_status'])->name('AdminPanel.Products_status');
+Route::get('/AdminPanel/Products/fe/{id}',[PanelAdmin::class,'Products_fe'])->name('AdminPanel.Products_fe');
 Route::get('/AdminPanel/Products/stoke',[PanelAdmin::class,'Products_stoke'])->name('AdminPanel.Products_stoke');
 Route::get('/AdminPanel/Products/notstoke',[PanelAdmin::class,'Products_notstoke'])->name('AdminPanel.Products_notstoke');
 
 Route::get('/AdminPanel/Orders/Remove/{id}',[PanelAdmin::class,'OrderRemove'])->name('AdminPanel.Orders.Remove');
 Route::get('/AdminPanel/Orders/Edit/{id}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');
 
+
+
+Route::get('/AdminPanel/Categorys',[PanelAdmin::class,'Categorys'])->name('AdminPanel.Categorys');
+Route::get('/AdminPanel/Categorys/remove/{id}',[PanelAdmin::class,'Categorys_remove'])->name('AdminPanel.Categorys_remove');
+Route::get('/AdminPanel/Categorys/status/{id}',[PanelAdmin::class,'Categorys_status'])->name('AdminPanel.Categorys_status');
+Route::post('/AdminPanel/Categorys/adds',[PanelAdmin::class,'Categorys_adds'])->name('AdminPanel.Categorys_adds');

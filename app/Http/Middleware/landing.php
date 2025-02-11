@@ -33,7 +33,9 @@ class landing
 
             $slider1 = slider::where('status', 1)
             ->where('position', 'slider1')
-            ->with('product:id,name,description,price,discount,image') // بارگذاری محصول مرتبط
+
+            ->with('product:id,name,description,price,discount,image,status')
+             // بارگذاری محصول مرتبط
             ->get()
             ->map(function ($slider) {
                 return [
@@ -47,7 +49,8 @@ class landing
             });
             view()->share('slider1', $slider1);
 
-            $featuredProduct = Product::where('is_featured', 1) // فیلتر کردن محصولاتی که featured هستند
+            $featuredProduct = Product::where('is_featured', 1)
+            ->where('products.status', "active") // فیلتر کردن محصولاتی که featured هستند
                            ->orderBy('updated_at', 'DESC') // ترتیب صعودی بر اساس تاریخ ایجاد
                            ->first(); // فقط اولین نتیجه را می‌خواهیم
            view()->share('featuredProduct', $featuredProduct);
@@ -67,6 +70,7 @@ class landing
            ->leftJoin('category_menu', 'category_zir_menu.category_id', '=', 'category_menu.id')
            ->leftJoin('products', 'products.category_id', '=', 'category_zir_menu.id')
            ->where('slidersproduct.status', 1)
+           ->where('products.status', "active")
            ->groupBy(
                'slidersproduct.position',
                'category_zir_menu.name',
@@ -80,7 +84,7 @@ class landing
            ->orderBy('slidersproduct.position', 'asc')
            ->get();
            view()->share('results', $results);
-           
+        //    dd($results);
 //     SELECT `baner_category`.`position`, `category_zir_menu`.`name`, `category_zir_menu`.`img`
 // FROM `baner_category`
 // LEFT JOIN `category_zir_menu` ON `baner_category`.`category_id` = `category_zir_menu`.`id`
@@ -99,7 +103,7 @@ $baners = DB::table('baner_category')
 ->get();
 view()->share('baners', $baners);
 
-$upview = Product::orderBy('products.view','DESC')->limit('3')->get();
+$upview = Product::orderBy('products.view','DESC')->where('products.status', "active")->limit('3')->get();
 
 view()->share('upview', $upview);
 

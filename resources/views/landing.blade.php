@@ -12,6 +12,10 @@
                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                 </ol>
                 <div class="carousel-inner">
+                    @if ($slider1 != null)
+
+                    @isset($slider1)
+
                     @php $isActive = true; @endphp
 
                     @foreach ($slider1 as $slide)
@@ -30,6 +34,12 @@
                         </div>
                         @php $isActive = false; @endphp
                     @endforeach
+                    @endisset
+
+                    @else
+                        محصولی برای نمایش نیست
+                    @endif
+
 
                    {{-- <div class="carousel-item">
                       <div class="col-md-6" style="padding-top: 20px;">
@@ -57,6 +67,10 @@
           </div>
        </div>
        <div class="col-md-9">
+        @if ($featuredProduct != null)
+
+
+
           <div class="vizheh">
              <div class="col-md-6">
                 <div class="vizheh-img">
@@ -82,6 +96,9 @@
                 <span>فرصت ویژه</span>
              </div>
           </div>
+          @else
+          محصولی برای نمایش نیست
+      @endif
        </div>
     </div>
  </div>
@@ -93,6 +110,8 @@
           <div class="three-slider">
              <h4>محصولات پر بازدید</h4>
              <div class="owl-carousel owl-theme ov1">
+
+                @if ($upview != null)
 
 
 
@@ -116,7 +135,9 @@
 
                 @endforeach
 
-
+                @else
+                محصولی برای نمایش نیست
+            @endif
 
              </div>
 
@@ -152,6 +173,9 @@
        <div class="col-md-12">
           <div class="two-slider">
 
+
+
+
                 @php
                 $ov2Printed = false;
             @endphp
@@ -167,7 +191,7 @@
                {{-- <h4> {{ $results->0->zir_menu_name }} < {{ $results['category_name'] }}</h4> --}}
 
 
-                    @if ($result->position === 'ov2')
+                    @if ($result->position === 'ov2' && $result->product_id != null)
                         <div class="item">
                             <figure>
                                 <a href="{{ route('singelproduct', ['id' => $result->product_id]) }}"><img src="img/{{$result->image}}" class="w-100" /></a>
@@ -177,6 +201,7 @@
                             <p><strong>قیمت:</strong> {{ number_format($result->product_price) }} ریال</p>
                             <p><strong>توضیحات:</strong> {!! nl2br(e($result->product_description)) !!}</p>
                         </div>
+                    
                     @endif
                 @endforeach
 

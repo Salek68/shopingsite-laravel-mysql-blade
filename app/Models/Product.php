@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'productsA';
+    protected $table = 'products';
 
     /**
      * The attributes that are mass assignable.

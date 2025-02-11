@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('user_id') // تنظیم رابطه
+            ->references('id') // اشاره به ستون id
+            ->on('users') // نام جدول زیرمنوها
+            ->onDelete('cascade');
     $table->string('name'); // نام مشتری
     $table->string('phone'); // شماره تماس
     $table->text('address'); // آدرس مشتری

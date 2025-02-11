@@ -24,8 +24,34 @@
             <div class="row">
                <div class="col-md-6">
                   <div class="login">
-                     <a href="{{route('Register.index')}}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
-                     <a href="{{route('Login.index')}}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+                    @php
+                    if(session('user_name')){
+
+if(Crypt::decrypt(session('user_role')) != "user"){
+    $userName = null;
+    $userName1 = Crypt::decrypt(session('user_name'));
+}
+else{
+    $userName1 = null;
+    $userName = Crypt::decrypt(session('user_name'));
+}
+
+
+                    }
+                    else{
+
+                    }
+
+                @endphp
+                @if ($userName != null)
+                <a href="{{route('UserPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName}}</a>
+                @elseif ($userName1 != null)
+                <a href="{{route('AdminPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName1}}</a>
+                @else
+                <a href="{{route('Register.index')}}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
+                <a href="{{route('Login.index')}}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+                @endif
+
                      <a href="{{route('cart.index')}}" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
                   </div>
                </div>

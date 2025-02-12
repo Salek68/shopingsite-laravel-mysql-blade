@@ -38,8 +38,11 @@ class PanelAdmin extends Controller
         } else {
             $orders = Order::with('items')->get();
             $is_active = 1;
+            $labels = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور'];
+$values = [100, 200, 150, 300, 250, 400];
+
             // dd($orders);
-            return view('admin.PanelAdmin', compact('orders', 'is_active'));
+            return view('admin.PanelAdmin', compact('orders', 'is_active','labels','values'));
         }
     }
 
@@ -417,7 +420,7 @@ class PanelAdmin extends Controller
     }
     }
 
-    function OrderEdit(Request $req, $id)
+    function OrderEdit(Request $req, $id,$status)
     {
         if ($this->checkadmin($req)) {
         $orders = Order::find($id);
@@ -425,25 +428,31 @@ class PanelAdmin extends Controller
 
 
 
-
-
-        // dd($orders);
-        if ($orders->status == 0) {
-            $orders->status = 1;
-            foreach ($orderitem->items as $item) {
+            if($status == 2){
+                foreach ($orderitem->items as $item) {
                 $Products = Product::find($item->product_id);
                 $Products->sold =  $Products->sold + $item->quantity;
                 $Products->save();
             }
 
-        } else {
-            $orders->status = 0;
-            foreach ($orderitem->items as $item) {
-                $Products = Product::find($item->product_id);
-                $Products->sold =  $Products->sold - $item->quantity;
-                $Products->save();
             }
-        }
+            elseif($status == -1 && $orders->status >=2){
+                foreach ($orderitem->items as $item) {
+                    $Products = Product::find($item->product_id);
+                    $Products->sold =  $Products->sold - $item->quantity;
+                    $Products->save();
+                }
+            }
+
+            $orders->status = $status;
+
+        // dd($orders);
+
+
+
+
+
+
         $orders->save();
         $orders = Order::with('items')->get();
         // dd($orders);
@@ -451,6 +460,6 @@ class PanelAdmin extends Controller
     } else {
         return redirect()->route('Login.index')->with('error', 'لطفاً وارد شوید');
     }
-    
+
     }
 }

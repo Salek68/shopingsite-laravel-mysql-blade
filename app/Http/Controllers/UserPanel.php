@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -42,9 +43,21 @@ class UserPanel extends Controller
         if ($this->checkuser($req)) {
         $uid= Crypt::decrypt(session('user_id'));
         $orders = Order::find($id);
+        $orderitem = Order::with(['items'])->find($id);
         if($orders->user_id == $uid){
-            $orders->delete();
+
+            if($orders->status >=2){
+                foreach ($orderitem->items as $item) {
+                    $Products = Product::find($item->product_id);
+                    $Products->sold =  $Products->sold - $item->quantity;
+                    $Products->save();
+                }
+            }
+
+            $orders->status = -1;
+            $orders->save();
         }
+
 
         $orders = Order::with('items')->get();
         // dd($orders);

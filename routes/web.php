@@ -60,7 +60,7 @@ Route::get('/AdminPanel/Products/stoke',[PanelAdmin::class,'Products_stoke'])->n
 Route::get('/AdminPanel/Products/notstoke',[PanelAdmin::class,'Products_notstoke'])->name('AdminPanel.Products_notstoke');
 
 Route::get('/AdminPanel/Orders/Remove/{id}',[PanelAdmin::class,'OrderRemove'])->name('AdminPanel.Orders.Remove');
-Route::get('/AdminPanel/Orders/Edit/{id}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');
+Route::get('/AdminPanel/Orders/Edit/{id}/{status}',[PanelAdmin::class,'OrderEdit'])->name('AdminPanel.Orders.Edit');
 
 
 

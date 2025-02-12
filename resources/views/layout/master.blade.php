@@ -28,29 +28,40 @@
                     if(session('user_name')){
 
 if(Crypt::decrypt(session('user_role')) != "user"){
-    $userName = null;
+    $userName = 0;
     $userName1 = Crypt::decrypt(session('user_name'));
 }
 else{
-    $userName1 = null;
+    $userName1 = 0;
     $userName = Crypt::decrypt(session('user_name'));
 }
 
 
                     }
                     else{
-
+                        $userName = null;
                     }
 
                 @endphp
-                @if ($userName != null)
+           @if (session('user_name') && (Crypt::decrypt(session('user_role')) == "user"))
+           <a href="{{route('UserPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName}}</a>
+           @elseif (session('user_name') && (Crypt::decrypt(session('user_role')) == "admin"))
+           <a href="{{route('AdminPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName1}}</a>
+           @else
+
+           <a href="{{route('Register.index')}}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
+           <a href="{{route('Login.index')}}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
+           @endif
+                {{-- @if ($userName != 0)
                 <a href="{{route('UserPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName}}</a>
-                @elseif ($userName1 != null)
+                @elseif ($userName1 != 0)
                 <a href="{{route('AdminPanel.index')}}" class="mybtn"><i class="fa fa-user-o"></i>پنل {{$userName1}}</a>
-                @else
+                @elseif ($userName == null)
                 <a href="{{route('Register.index')}}" class="mybtn"><i class="fa fa-user-plus"></i>ثبت نام</a>
                 <a href="{{route('Login.index')}}" class="mybtn"><i class="fa fa-user-o"></i>ورود</a>
-                @endif
+                @endif --}}
+
+
 
                      <a href="{{route('cart.index')}}" class="mybtn"><i class="fa fa-cart-arrow-down"></i>سبد</a>
                   </div>

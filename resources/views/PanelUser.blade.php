@@ -85,12 +85,18 @@
             <td><a href=""> {{$order->updated_at}}</a></td>
             <td><a href="" class="text-error"> @if ($order->status == 0)
 منتظر پرداخت
+            @elseif ($order->status == 1)
+            سفارش شما درحال برسی است
+            @elseif ($order->status == 2)
+            سفارش شما تایید و در حال انجام است
+            @elseif ($order->status == 3)
+            سفارش شما تکمیل و تحویل پست داده شد
             @else
-پرداخت شده
+لغو شده
             @endif</a></td>
             <td class="i__oprations">
 
-                <a href="{{ route('UserPanel.Orders_remove', ['id'=>$order->id]) }}" class="item-delete margin-left-10" title="حذف"></a>
+                <a href="{{ route('UserPanel.Orders_remove', ['id'=>$order->id]) }}" class="item-delete margin-left-10" title="لغو"></a>
 
             </td>
         </tr>

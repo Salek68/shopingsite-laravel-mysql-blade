@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 class LoginController extends Controller
 {
     function index(){
-
+        
         return view('Login');
     }
     function index1(Request $req){

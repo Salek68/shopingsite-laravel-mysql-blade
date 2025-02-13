@@ -8,6 +8,7 @@
       <link href="{{ asset('style/owl.carousel.css') }}" rel="stylesheet" type="text/css">
       <link href="{{ asset('style/owl.theme.default.css') }}" rel="stylesheet" type="text/css">
       <link href="{{ asset('style/style.css') }}" rel="stylesheet" type="text/css">
+   
    </head>
    <body>
       <div class="social">

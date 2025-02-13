@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -35,6 +36,25 @@ class UserPanel extends Controller
             $is_active = 1;
             // dd($orders);
              return view('PanelUser', compact('orders', 'is_active'));
+        }
+    }
+
+    function UserInfo(Request $req,$id)
+    {
+
+        if ($this->checkuser($req) == false) {
+            return redirect()->route('Login.index')->with('error', 'لطفاً وارد شوید');
+        } else {
+           $uid = Crypt::decrypt(session('user_id'));
+            if($id == $uid){
+                $is_active = 2;
+                $user = User::find($id);
+                return view('UserInformation', compact('is_active','user'));
+            }
+            else{
+                return redirect()->route('Login.index')->with('error', 'لطفاً وارد شوید');
+            }
+
         }
     }
 

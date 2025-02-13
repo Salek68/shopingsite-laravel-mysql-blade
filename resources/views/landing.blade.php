@@ -201,7 +201,7 @@
                             <p><strong>قیمت:</strong> {{ number_format($result->product_price) }} ریال</p>
                             <p><strong>توضیحات:</strong> {!! nl2br(e($result->product_description)) !!}</p>
                         </div>
-                    
+
                     @endif
                 @endforeach
 

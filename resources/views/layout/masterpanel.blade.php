@@ -21,6 +21,7 @@
         <span class="profile__name"> @php
             if(session('user_name')){
                 $userName = Crypt::decrypt(session('user_name'));
+                $uid =Crypt::decrypt(session('user_id'));
             }
 
         @endphp
@@ -51,7 +52,9 @@
     @else
 
     @endif --}}
-    <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
+
+    <li class="item-li i-dashboard  @isset($is_active)  @if ($is_active == 1) is-active @endif @endisset"><a href="{{ route('UserPanel.index') }}">پیشخوان </a></li>
+        <li class="item-li i-user__inforamtion  @isset($is_active)  @if ($is_active == 2) is-active @endif @endisset"><a href="{{ route('UserPanel.UserInfo' , [ 'id' => $uid]) }}">اطلاعات کاربری</a></li>
 
 
     </ul>

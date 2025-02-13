@@ -38,6 +38,7 @@ Route::post('/Login',[LoginController::class,'index1'])->name('Login.check');
 
 Route::get('/UserPanel',[UserPanel::class,'index'])->name('UserPanel.index');
 Route::get('/UserPanel/Orders/remove/{id}',[UserPanel::class,'Orders_remove'])->name('UserPanel.Orders_remove');
+Route::get('/UserPanel/UserInfo/{id}',[UserPanel::class,'UserInfo'])->name('UserPanel.UserInfo');
 
 
 

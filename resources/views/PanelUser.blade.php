@@ -4,25 +4,96 @@
 @endsection
 @section('main-content')
 <div class="main-content">
+    @php
+    $status0 =0;
+    $status1 =0;
+    $status2 =0;
+    $status3 =0;
+    $status11 =0;
+
+@endphp
     <div class="row no-gutters font-size-13 margin-bottom-10">
-        <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-            <p> موجودی حساب فعلی </p>
-            <p>2,500,000 تومان</p>
+        <div class="col-2 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
+            @foreach ($orders as $order)
+            @if ($order->status == 0)
+          @php
+              $status0 +=1;
+          @endphp
+                        @elseif ($order->status == 1)
+                        @php
+                        $status1 +=1;
+                    @endphp
+                        @elseif ($order->status == 2)
+                        @php
+              $status2 +=1;
+          @endphp
+                        @elseif ($order->status == 3)
+                        @php
+                        $status3 +=1;
+                    @endphp
+                        @else
+                        @php
+                        $status11 +=1;
+                    @endphp
+                        @endif
+
+            @endforeach
+            <p>   سفارشات تکمیل شده </p>
+            <p style="   margin-top: 10px;     text-align: center;
+    border-radius: 100%;
+    background: red;
+    width: 25px;
+    color: white;
+    margin-right: 100px;">@isset($status3)
+                        {{ $status3}}
+            @endisset</p>
         </div>
-        <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-            <p> کل فروش دوره ها</p>
-            <p>2,500,000 تومان</p>
+        <div class="col-2 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
+            <p>   سفارشات  در انتظار پرداخت </p>
+            <p style="  margin-top: 10px;      text-align: center;
+            border-radius: 100%;
+            background: red;
+            width: 25px;
+            color: white;
+            margin-right: 100px;">@isset($status0)
+                        {{ $status0}}
+            @endisset</p>
         </div>
-        <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
-            <p> کارمزد کسر شده </p>
-            <p>2,500,000 تومان</p>
+        <div class="col-2 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
+            <p>   سفارشات در حال انجام </p>
+            <p style=" margin-top: 10px;       text-align: center;
+            border-radius: 100%;
+            background: red;
+            width: 25px;
+            color: white;
+            margin-right: 100px;">@isset($status2)
+                        {{ $status2}}
+            @endisset</p>
         </div>
-        <div class="col-3 padding-20 border-radius-3 bg-white margin-bottom-10">
-            <p> درآمد خالص </p>
-            <p>2,500,000 تومان</p>
+        <div class="col-2 padding-20 border-radius-3 bg-white  margin-left-10 margin-bottom-10">
+            <p>   سفارشات در انتظار برسی </p>
+            <p style=" margin-top: 10px;       text-align: center;
+            border-radius: 100%;
+            background: red;
+            width: 25px;
+            color: white;
+            margin-right: 100px;">@isset($status1)
+                        {{ $status1}}
+            @endisset</p>
+        </div>
+        <div class="col-2 padding-20 border-radius-3 bg-white margin-bottom-10">
+            <p>   سفارشات لغو شده </p>
+            <p style=" margin-top: 10px;    text-align: center;
+            border-radius: 100%;
+            background: red;
+            width: 25px;
+            color: white;
+            margin-right: 100px;">@isset($status11)
+                        {{ $status11}}
+            @endisset</p>
         </div>
     </div>
-    <div class="row no-gutters font-size-13 margin-bottom-10">
+    {{-- <div class="row no-gutters font-size-13 margin-bottom-10">
         <div class="col-3 padding-20 border-radius-3 bg-white margin-left-10 margin-bottom-10">
             <p> درآمد امروز </p>
             <p>500,000 تومان</p>
@@ -39,7 +110,7 @@
             <p>تراکنش های موفق امروز (0) تراکنش </p>
             <p>2,500,000 تومان</p>
         </div>
-    </div>
+    </div> --}}
     <div class="row no-gutters font-size-13 margin-bottom-10">
         <div class="col-8 padding-20 bg-white margin-bottom-10 margin-left-10 border-radius-3">
             محل قرار گیری نمودار
